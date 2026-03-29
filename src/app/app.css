@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'),
+        url('/fonts/satoshi/Satoshi-Variable.woff') format('woff');
+    font-weight: 300 900;
+    font-display: swap;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'),
+        url('/fonts/satoshi/Satoshi-VariableItalic.woff') format('woff');
+    font-weight: 300 900;
+    font-display: swap;
+    font-style: italic;
+}
+
+@theme {
+    --font-sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+}
+
+html,
+body,
+* {
+    cursor: none !important;
+}
+
+a,
+button,
+input,
+label,
+[role="button"] {
+    cursor: pointer !important;
+}
