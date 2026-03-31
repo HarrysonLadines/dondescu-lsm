@@ -36,7 +36,7 @@ Fomentamos la colaboración mediante un sistema de puntos y recompensas:
 ## 🛠️ Stack 
 - **Frontend**: Angular 
 - **Backend**: NestJS
-- **Database**: PostgreSQL (Supabase)
+- **Database**: PostgreSQL (Supabase) - Prisma ORM
 - **Storage**: Supabase Storage (Fotos de productos/tickets)
 
 ---
