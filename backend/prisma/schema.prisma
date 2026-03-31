@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Producto {
+  id          String   @id @default(uuid())
+  nombre        String
+  precio       Float
+  descripcion String?
+  imagenUrl    String?  
+}
