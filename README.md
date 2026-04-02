@@ -34,9 +34,14 @@ Fomentamos la colaboración mediante un sistema de puntos y recompensas:
 ---
 
 ## 🛠️ Stack 
-- **Frontend**: Angular 
-- **Backend**: NestJS
-- **Database**: PostgreSQL (Supabase) - Prisma ORM
-- **Storage**: Supabase Storage (Fotos de productos/tickets)
+- **Frameworks**: Next.js (App Router) & NestJS
+- **Lenguaje**: TypeScript
+- **Autenticación**: Better Auth (Gestión de sesiones y seguridad avanzada)
+- **Base de datos**: PostgreSQL (vía Supabase)
+- **ORM**: Prisma 
+- **Infraestructura**: 
+    - **Storage**: Supabase Storage (Fotos de productos/tickets)
+    - **Emails**: Resend (Envío de códigos de verificación y alertas)
 
 ---
+
