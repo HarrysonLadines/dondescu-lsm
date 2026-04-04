@@ -7,10 +7,98 @@ datasource db {
   provider = "postgresql"
 }
 
+model Usuario {
+  id_usuario     Int            @id @default(autoincrement())
+  nombre         String
+  email          String         @unique
+  ubicacion      String?
+  puntos         Int            @default(0)
+  contrasena     String
+  colaboraciones Colaboracion[]
+  logros Logro[]
+  ganadas Ganador[]
+  rol Rol @default(USER)
+}
+
+enum Rol {
+  USER
+  ADMIN
+}
+
+model Categoria {
+  id_categoria Int        @id @default(autoincrement())
+  nombre       String
+  productos    Producto[]
+}
+
 model Producto {
-  id          String  @id @default(uuid())
+  id_producto  Int               @id @default(autoincrement())
+  nombre       String
+  precio_base  Float?
+  id_categoria Int
+  imagenUrl    String?
+  categoria    Categoria         @relation(fields: [id_categoria], references: [id_categoria])
+  negocios     ProductoNegocio[]
+}
+
+model Negocio {
+  id_negocio  Int               @id @default(autoincrement())
   nombre      String
-  precio      Float
-  descripcion String?
+  direccion   String?           
+  lat         Float?            
+  lng         Float?            
   imagenUrl   String?
+  productos   ProductoNegocio[]
+}
+
+model ProductoNegocio {
+  id_producto    Int
+  id_negocio     Int
+  producto       Producto       @relation(fields: [id_producto], references: [id_producto])
+  negocio        Negocio        @relation(fields: [id_negocio], references: [id_negocio])
+  colaboraciones Colaboracion[]
+
+  @@id([id_producto, id_negocio]) 
+}
+
+model Colaboracion {
+  id_colaboracion Int      @id @default(autoincrement())
+  fecha_registro  DateTime @default(now())
+  precio          Float
+  descripcion     String?
+  estado          EstadoColaboracion @default(PENDIENTE)
+  id_usuario      Int
+  usuario         Usuario  @relation(fields: [id_usuario], references: [id_usuario])
+
+  id_producto     Int
+  id_negocio      Int
+  productoNegocio ProductoNegocio @relation(fields: [id_producto, id_negocio], references: [id_producto, id_negocio])
+}
+
+enum EstadoColaboracion {
+  PENDIENTE
+  APROBADO
+  RECHAZADO
+}
+
+model Ganador {
+  id_ganador Int      @id @default(autoincrement())
+  mes        Int      
+  anio       Int      
+  puesto     Int      
+  puntosLogrados Int  
+  
+  id_usuario Int
+  usuario    Usuario  @relation(fields: [id_usuario], references: [id_usuario])
+
+  @@unique([mes, anio, puesto]) 
+}
+
+model Logro {
+  id_logro    Int      @id @default(autoincrement())
+  nombre      String   
+  fecha       DateTime @default(now())
+  
+  id_usuario  Int
+  usuario     Usuario  @relation(fields: [id_usuario], references: [id_usuario])
 }
