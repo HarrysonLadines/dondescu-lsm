@@ -1,4 +1,4 @@
-[Diagrama ER](DonDescu-DiagramaER.svg)
+[Diagrama ER](DonDescu-DiagramaER.png)
 
 ### Usuario
 Almacena la información de los vecinos de Libertador. Incluye el sistema de puntos y el rol (`USER` / `ADMIN`) para la moderación.
