@@ -7,17 +7,73 @@ datasource db {
   provider = "postgresql"
 }
 
-model Usuario {
-  id_usuario     Int            @id @default(autoincrement())
-  nombre         String
-  email          String         @unique
-  ubicacion      String?
-  puntos         Int            @default(0)
-  contrasena     String
+model User {
+  id            String    @id
+  name          String
+  email         String    @unique
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+  
+  ubicacion     String?
+  puntos        Int       @default(0)
+  rol           Rol       @default(USER)
+
+  sessions       Session[]
+  accounts       Account[]
   colaboraciones Colaboracion[]
-  logros Logro[]
-  ganadas Ganador[]
-  rol Rol @default(USER)
+  logros         Logro[]
+  ganadas        Ganador[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+  @@index([userId])
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+  @@index([userId])
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+  @@index([identifier])
 }
 
 enum Rol {
@@ -42,13 +98,13 @@ model Producto {
 }
 
 model Negocio {
-  id_negocio  Int               @id @default(autoincrement())
-  nombre      String
-  direccion   String?           
-  lat         Float?            
-  lng         Float?            
-  imagenUrl   String?
-  productos   ProductoNegocio[]
+  id_negocio Int               @id @default(autoincrement())
+  nombre     String
+  direccion  String?
+  lat        Float?
+  lng        Float?
+  imagenUrl  String?
+  productos  ProductoNegocio[]
 }
 
 model ProductoNegocio {
@@ -58,21 +114,22 @@ model ProductoNegocio {
   negocio        Negocio        @relation(fields: [id_negocio], references: [id_negocio])
   colaboraciones Colaboracion[]
 
-  @@id([id_producto, id_negocio]) 
+  @@id([id_producto, id_negocio])
 }
 
 model Colaboracion {
-  id_colaboracion Int      @id @default(autoincrement())
-  fecha_registro  DateTime @default(now())
+  id_colaboracion Int                @id @default(autoincrement())
+  fecha_registro  DateTime           @default(now())
   precio          Float
   descripcion     String?
   estado          EstadoColaboracion @default(PENDIENTE)
-  id_usuario      Int
-  usuario         Usuario  @relation(fields: [id_usuario], references: [id_usuario])
+  
+  id_usuario      String
+  usuario         User               @relation(fields: [id_usuario], references: [id])
 
   id_producto     Int
   id_negocio      Int
-  productoNegocio ProductoNegocio @relation(fields: [id_producto, id_negocio], references: [id_producto, id_negocio])
+  productoNegocio ProductoNegocio    @relation(fields: [id_producto, id_negocio], references: [id_producto, id_negocio])
 }
 
 enum EstadoColaboracion {
@@ -82,23 +139,23 @@ enum EstadoColaboracion {
 }
 
 model Ganador {
-  id_ganador Int      @id @default(autoincrement())
-  mes        Int      
-  anio       Int      
-  puesto     Int      
-  puntosLogrados Int  
+  id_ganador     Int      @id @default(autoincrement())
+  mes            Int
+  anio           Int
+  puesto         Int
+  puntosLogrados Int
   
-  id_usuario Int
-  usuario    Usuario  @relation(fields: [id_usuario], references: [id_usuario])
+  id_usuario     String
+  usuario        User     @relation(fields: [id_usuario], references: [id])
 
-  @@unique([mes, anio, puesto]) 
+  @@unique([mes, anio, puesto])
 }
 
 model Logro {
-  id_logro    Int      @id @default(autoincrement())
-  nombre      String   
-  fecha       DateTime @default(now())
+  id_logro   Int      @id @default(autoincrement())
+  nombre     String
+  fecha      DateTime @default(now())
   
-  id_usuario  Int
-  usuario     Usuario  @relation(fields: [id_usuario], references: [id_usuario])
+  id_usuario String
+  usuario    User     @relation(fields: [id_usuario], references: [id])
 }
