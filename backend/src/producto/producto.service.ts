@@ -14,25 +14,32 @@ export class ProductoService {
   }
 
   async findAll() {
-    return await this.prisma.producto.findMany();
-  }
-
-  async findOne(id: string) {
-    return await this.prisma.producto.findUnique({
-      where: { id },
+    return await this.prisma.producto.findMany({
+      include: {
+        categoria: true,
+      },
     });
   }
 
-  async update(id: string, updateProductoDto: UpdateProductoDto) {
+  async findOne(id_producto: number) {
+    return await this.prisma.producto.findUnique({
+      where: { id_producto },
+      include: {
+        categoria: true,
+      },
+    });
+  }
+
+  async update(id_producto: number, updateProductoDto: UpdateProductoDto) {
     return await this.prisma.producto.update({
-      where: { id },
+      where: { id_producto },
       data: updateProductoDto,
     });
   }
 
-  async remove(id: string) {
+  async remove(id_producto: number) {
     return await this.prisma.producto.delete({
-      where: { id },
+      where: { id_producto },
     });
   }
 }
