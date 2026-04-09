@@ -10,10 +10,13 @@ import {
 import { ProductoService } from './producto.service.js';
 import { CreateProductoDto } from './dto/create-producto.dto.js';
 import { UpdateProductoDto } from './dto/update-producto.dto.js';
+import { AuthGuard } from '../auth/auth.guard.js';
+import { UseGuards } from '@nestjs/common';
 
+@UseGuards(AuthGuard)
 @Controller('producto')
 export class ProductoController {
-  constructor(private readonly productoService: ProductoService) {}
+  constructor(private readonly productoService: ProductoService) { }
 
   @Post()
   create(@Body() createProductoDto: CreateProductoDto) {
