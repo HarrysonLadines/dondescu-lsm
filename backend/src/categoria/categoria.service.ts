@@ -8,6 +8,7 @@ export class CategoriaService {
   constructor(private prisma: PrismaService) {}
 
   async create(createCategoriaDto: CreateCategoriaDto) {
+    console.log(createCategoriaDto);
     return await this.prisma.categoria.create({
       data: createCategoriaDto,
     });

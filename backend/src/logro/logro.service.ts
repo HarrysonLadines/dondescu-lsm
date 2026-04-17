@@ -16,8 +16,6 @@ export class LogroService {
   async findAll() {
     return await this.prisma.logro.findMany({
       include: {
-        producto: true,
-        negocio: true,
         usuario: true,
       }
     });
@@ -27,8 +25,6 @@ export class LogroService {
     return await this.prisma.logro.findUnique({
       where: { id_logro },
       include: {
-        producto: true,
-        negocio: true,
         usuario: true,
       } 
     });

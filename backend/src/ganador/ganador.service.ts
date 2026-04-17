@@ -9,8 +9,6 @@ export class GanadorService {
   async findAll() {
     return await this.prisma.ganador.findMany({
       include: {
-        producto: true,
-        negocio: true,
         usuario: true,
       }
     });
@@ -20,8 +18,6 @@ export class GanadorService {
     return await this.prisma.ganador.findUnique({
       where: { id_ganador },
       include: {
-        producto: true,
-        negocio: true,
         usuario: true,
       } 
     });

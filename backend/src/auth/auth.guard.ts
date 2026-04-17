@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
             request.session = session.session;
             return true;
         } catch (error) {
-            throw new UnauthorizedException();
+            throw new Error(error instanceof Error ? error.message : 'Unknown error');
         }
     }
 }

@@ -11,7 +11,7 @@ import { CreateColaboracionDto } from './dto/create-colaboracion.dto.ts';
 import { ColaboracionService } from './colaboracion.service.ts';
 import { UpdateColaboracionDto } from './dto/update-colaboracion.dto.ts';
 
-@Controller('Colaboracion')
+@Controller('colaboracion')
 export class ColaboracionController {
   constructor(private readonly colaboracionService: ColaboracionService) { }
 

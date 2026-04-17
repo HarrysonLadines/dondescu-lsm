@@ -13,7 +13,7 @@ import { UpdateProductoDto } from './dto/update-producto.dto.js';
 import { AuthGuard } from '../auth/auth.guard.js';
 import { UseGuards } from '@nestjs/common';
 
-@UseGuards(AuthGuard)
+//@UseGuards(AuthGuard)
 @Controller('producto')
 export class ProductoController {
   constructor(private readonly productoService: ProductoService) { }

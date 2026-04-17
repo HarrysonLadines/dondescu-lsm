@@ -14,16 +14,17 @@ import { UpdateCategoriaDto } from './dto/update-categoria.dto.ts';
 @Controller('categoria')
 export class CategoriaController {
   constructor(private readonly categoriaService: CategoriaService) {}
+  
+  @Get()
+  findAll() {
+    return this.categoriaService.findAll();
+  }
 
   @Post()
   create(@Body() createCategoriaDto: CreateCategoriaDto) {
     return this.categoriaService.create(createCategoriaDto);
   }
 
-  @Get()
-  findAll() {
-    return this.categoriaService.findAll();
-  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
